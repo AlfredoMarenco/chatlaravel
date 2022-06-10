@@ -61,7 +61,7 @@ class User extends Authenticatable
 
 
     //Relacion uno a muchos contact
-    public function contact()
+    public function contacts()
     {
         return $this->hasMany(Contact::class);
     }

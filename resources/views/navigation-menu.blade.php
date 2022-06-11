@@ -12,8 +12,11 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-jet-nav-link class="dark:text-gray-400" href="{{ route('contacts.index') }}" :active="request()->routeIs('contacts.*')">
+                    <x-jet-nav-link  href="{{ route('contacts.index') }}" :active="request()->routeIs('contacts.*')">
                         {{ __('Contacts') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link  href="{{ route('chat.index') }}" :active="request()->routeIs('chat.index')">
+                        {{ __('Chat') }}
                     </x-jet-nav-link>
                 </div>
             </div>
@@ -139,6 +142,9 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-jet-responsive-nav-link href="{{ route('contacts.index') }}" :active="request()->routeIs('contacts.*')">
                 {{ __('Contacts') }}
+            </x-jet-responsive-nav-link>
+            <x-jet-responsive-nav-link href="{{ route('chat.index') }}" :active="request()->routeIs('chat.index')">
+                {{ __('Chat') }}
             </x-jet-responsive-nav-link>
         </div>
 

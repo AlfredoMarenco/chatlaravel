@@ -27,6 +27,18 @@ class ChatComponent extends Component
         ->get() ?? [];
     }
 
+    //Propiedades computadas
+
+    public function getMessagesProperty(){
+        return $this->chat ? $this->chat->messages()->get() : [];
+    }
+
+    public function getChatsProperty(){
+        return auth()->user()->chats()->get()->sortByDesc('last_message_at');
+    }
+
+
+
     public function open_chat_contact(Contact $contact){
         $chat = auth()->user()->chats()
                 ->whereHas('users',function($query) use ($contact){
@@ -36,9 +48,16 @@ class ChatComponent extends Component
                 ->first();
         if ($chat) {
             $this->chat = $chat;
+            $this->reset('contactChat','bodyMessage','search');
         }else{
             $this->contactChat = $contact;
+            $this->reset('chat','bodyMessage','search');
         }
+    }
+
+    public function open_chat(Chat $chat){
+        $this->chat = $chat;
+        $this->reset('contactChat','bodyMessage');
     }
 
     public function sendMessage(){

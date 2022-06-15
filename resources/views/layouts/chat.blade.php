@@ -23,11 +23,16 @@
 
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
+
+    <script>
+        window.PUSHER_APP_KEY = '{{ config('broadcasting.connections.pusher.key') }}';
+        window.APP_ENV {{ config('app.env') == 'production' ? true : false }}
+    </script>
 </head>
 
 <body class="font-sans antialiased">
 
-    <div class="h-32 bg-teal-600">
+    <div class="h-32 bg-blue-900">
 
     </div>
     <div class="absolute left-0 top-6 w-screen">

@@ -1,4 +1,4 @@
-<div class="bg-gray-50 rounded-lg shadow border border-gray-200 overflow-hidden">
+<div class="bg-gray-50 rounded-lg shadow border border-gray-200 overflow-hidden" x-data="data()">
     <div class="grid grid-cols-3 divide-x divide-gray-200">
         {{-- Contactos --}}
         <div class="col-span-1">
@@ -44,16 +44,26 @@
                             </figure>
                             <div class="w-[calc(100%-4rem)] py-4 border-b border-gray-200">
                                 <div class="flex justify-between items-center font-semibold">
-                                    <p>
-                                        {{ $chatList->name }}
-                                    </p>
-                                    <p class="text-xs">
-                                        {{ $chatList->last_message_at->format('d-m-Y H:i A') }}
-                                    </p>
+                                    <div>
+                                        <p>
+                                            {{ $chatList->name }}
+                                        </p>
+                                        <p class="text-sm text-gray-700 mt-1 truncate">
+                                            {{ $chatList->messages->last()->body }}
+                                        </p>
+                                    </div>
+                                    <div class="text-right">
+                                        <p class="text-xs">
+                                            {{ $chatList->last_message_at->format('d-m-Y H:i A') }}
+                                        </p>
+                                        @if ($chatList->unread_messages)
+                                            <span
+                                                class="inline-flex items-center justify-center px-2 py-1 mr-2 text-xs font-bold leading-none text-green-100 bg-green-600 rounded-full">
+                                                {{ $chatList->unread_messages }}
+                                            </span>
+                                        @endif
+                                    </div>
                                 </div>
-                                <p class="text-sm text-gray-700 mt-1 truncate">
-                                    {{ $chatList->messages->last()->body }}
-                                </p>
                             </div>
                         </div>
                     @endforeach
@@ -75,17 +85,21 @@
                                 alt="{{ $contactChat->name }}">
                         @endif
                     </figure>
-                    <div class="flex-1 ml-5">
+                    <div class="ml-4">
                         @if ($chat)
                             <p class="text-gray-800">{{ $chat->name }}</p>
-                            {{-- <p class="text-gray-600 text-xs">{{ $chat->email }}</p> --}}
-                            <p class="text-green-500 text-sm">Online</p>
                         @else
                             <p class="text-gray-800">{{ $contactChat->name }}</p>
-                            {{-- <p class="text-gray-600 text-xs">{{ $contactChat->user->email }}</p> --}}
-                            <p class="text-green-500 text-sm">Online</p>
                         @endif
-
+                        {{-- <p class="text-gray-600 text-xs">{{ $chat->email }}</p> --}}
+                        <p class="text-gray-600 text-sm" x-show="chat_id == typingChatId">Escribiendo...</p>
+                        @if ($this->active)
+                            <p class="text-green-500 text-sm" x-show="chat_id != typingChatId" wire:key="online">Online
+                            </p>
+                        @else
+                            <p class="text-red-600 text-sm" x-show="chat_id != typingChatId" wire:key="offline">Offline
+                            </p>
+                        @endif
                     </div>
                 </div>
                 <div class="h-[calc(100vh-11rem)] overflow-auto border-t border-gray-200 px-3 py-2">
@@ -96,10 +110,17 @@
                                 <p class="text-gray-800 text-sm">{{ $message->body }}</p>
                                 <p
                                     class="text-xs text-gray-500 {{ $message->user_id == auth()->id() ? 'text-right' : '' }} mt-1">
-                                    {{ $message->created_at->format('d-m-y h:i A') }}</p>
+                                    {{ $message->created_at->format('d-m-y h:i A') }}
+                                    @if ($message->user_id == auth()->id())
+                                        <i class="fas fa-check-double ml-2 {{ $message->is_read ? 'text-blue-500': 'text-gray-600' }}"></i>
+                                    @endif
+                                </p>
                             </div>
                         </div>
                     @endforeach
+                    <span id="final">
+
+                    </span>
                 </div>
                 <form class="bg-gray-100 h-16 flex items-center px-4" wire:submit.prevent='sendMessage()'>
                     <x-jet-input class="flex-1" type="text" placeholder="Escribe un mensaje"
@@ -165,3 +186,29 @@
         </div>
     </div>
 </div>
+
+@push('js')
+    <script>
+        function data() {
+            return {
+                chat_id: @entangle('chat_id'),
+                typingChatId: null,
+                init() {
+                    Echo.private('App.Models.User.' + {{ auth()->id() }})
+                        .notification((notification) => {
+                            if (notification.type === 'App\\Notifications\\UserTyping') {
+                                this.typingChatId = notification.chat_id;
+                                setTimeout(() => {
+                                    this.typingChatId = null;
+                                }, 3000);
+                            }
+                        });
+                }
+            }
+        }
+
+        Livewire.on('scrollIntoView', function() {
+            document.getElementById('final').scrollIntoView(true);
+        });
+    </script>
+@endpush

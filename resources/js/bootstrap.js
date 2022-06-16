@@ -24,8 +24,8 @@ window.Echo = new Echo({
     broadcaster: 'pusher',
     key: window.PUSHER_APP_KEY,
     wsHost: window.location.hostname,
-    wsPort: window.APP_ENV ? 6002 : 6001,
-    wssPort: window.APP_ENV ? 6002 : 6001,
+    wsPort: window.APP_ENV ? 6001 : 6001,
+    wssPort: window.APP_ENV ? 6001 : 6001,
     forceTLS: window.APP_ENV,
     disableStats: true,
 });

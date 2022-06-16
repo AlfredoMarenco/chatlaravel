@@ -28,5 +28,6 @@ window.Echo = new Echo({
     wssPort: window.APP_ENV ? 6002 : 6001,
     forceTLS: window.APP_ENV,
     disableStats: true,
+    enabledTransports: ['ws', 'wss']
 });
 

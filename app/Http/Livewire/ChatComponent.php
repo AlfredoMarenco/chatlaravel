@@ -57,10 +57,10 @@ class ChatComponent extends Component
         return $this->chat ? $this->chat->users->where('id', '!=', auth()->id()) : collect();
     }
 
-    public function getActiveProperty(){
+    /* public function getActiveProperty(){
         return $this->users->contains($this->users_notifications->first()->id);
     }
-
+ */
     //Clico de vida
     public function updatedBodyMessage($value){
         if ($value) {

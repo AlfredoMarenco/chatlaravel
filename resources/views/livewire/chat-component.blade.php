@@ -93,13 +93,13 @@
                         @endif
                         {{-- <p class="text-gray-600 text-xs">{{ $chat->email }}</p> --}}
                         <p class="text-gray-600 text-sm" x-show="chat_id == typingChatId">Escribiendo...</p>
-                       {{--  @if ($this->active)
+                        @if ($this->active)
                             <p class="text-green-500 text-sm" x-show="chat_id != typingChatId" wire:key="online">Online
                             </p>
                         @else
                             <p class="text-red-600 text-sm" x-show="chat_id != typingChatId" wire:key="offline">Offline
                             </p>
-                        @endif --}}
+                        @endif
                     </div>
                 </div>
                 <div class="h-[calc(100vh-11rem)] overflow-auto border-t border-gray-200 px-3 py-2">

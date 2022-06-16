@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
 
     <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
 
     <script>
         window.PUSHER_APP_KEY = '{{ config('broadcasting.connections.pusher.key') }}';

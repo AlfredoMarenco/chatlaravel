@@ -22,7 +22,7 @@ window.Pusher = require('pusher-js');
 
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: process.env.PUSHER_APP_KEY,
+    key: process.env.MIX_PUSHER_APP_KEY,
     wsHost: window.location.hostname,
     wsPort: window.APP_ENV ? 6002 : 6001,
     wssPort: window.APP_ENV ? 6002 : 6001,

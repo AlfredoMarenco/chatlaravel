@@ -20,10 +20,10 @@
 
     {{-- Fontawesome --}}
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
-    <script>
+   {{--  <script>
         window.PUSHER_APP_KEY = '{{ config('broadcasting.connections.pusher.key') }}';
         window.APP_ENV = {{ config('app.env') == 'production' ? true : false }};
-    </script>
+    </script> --}}
     <!-- Scripts -->
     <script src="{{ mix('js/app.js') }}" defer></script>
 </head>

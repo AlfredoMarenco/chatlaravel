@@ -5002,16 +5002,27 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * allows your team to easily build robust real-time web applications.
  */
 
+/* import Echo from 'laravel-echo';
+
+window.Pusher = require('pusher-js');
+
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: window.PUSHER_APP_KEY,
+    wsHost: window.location.hostname,
+    wsPort: window.APP_ENV ? 6002 : 6001,
+    wssPort: window.APP_ENV ? 6002 : 6001,
+    forceTLS: window.APP_ENV,
+    disableStats: true,
+}); */
+
 
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: window.PUSHER_APP_KEY,
-  wsHost: window.location.hostname,
-  wsPort: window.APP_ENV ? 6001 : 6001,
-  wssPort: window.APP_ENV ? 6001 : 6001,
-  forceTLS: window.APP_ENV,
-  disableStats: true
+  key: "7cc5d5e70c5a99ee1ca3",
+  cluster: "us2",
+  forceTLS: true
 });
 
 /***/ }),
